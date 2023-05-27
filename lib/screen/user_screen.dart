@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_crud/provider/users.dart';
 import 'package:firebase_crud/screen/add_user.dart';
+import 'package:firebase_crud/screen/edit_user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class UserScreen extends StatelessWidget {
-  const UserScreen({super.key});
+  const UserScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +59,20 @@ class UserScreen extends StatelessWidget {
                 return ListTile(
                   title: Text(userData['fristname']),
                   subtitle: Text(userData['age']),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangeNotifierProvider(
+                                create: (context) => users(),
+                                child: EditScreen(idDoc: data[index].id))));
+                  },
+                  trailing: IconButton(
+                    onPressed: () {
+                      user.DeleteUser(data[index].id);
+                    },
+                    icon: Icon(Icons.delete),
+                  ),
                 );
               },
             );

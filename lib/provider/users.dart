@@ -36,4 +36,24 @@ class users with ChangeNotifier {
     CollectionReference users = this.db.collection("users");
     return users.snapshots();
   }
+
+  Future<DocumentSnapshot<Object?>> getUserById(String id) {
+    DocumentReference docRef = db.collection("users").doc(id);
+    return docRef.get();
+  }
+
+  void UpdateUser(String id) {
+    DocumentReference docRef = db.collection("users").doc(id);
+    docRef.update({
+      'fristname': this.fristNameC.text,
+      'lastname': this.lastNameC.text,
+      'age': this.ageC.text,
+    });
+  }
+
+  void DeleteUser(String id) {
+    DocumentReference docRef = db.collection("users").doc(id);
+
+    docRef.delete();
+  }
 }
